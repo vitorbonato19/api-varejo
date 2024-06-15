@@ -6,11 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -26,10 +30,13 @@ public class Order implements Serializable{
 	private Long id;
 	@Column(name = "order_desc")
 	private String desc;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-DD-dd HH:mm:ss", timezone="GMT")
 	@Column(name = "order_moment")
 	private Instant moment;
 	
 	@ManyToOne
+	@JoinColumn(name = "order_clients_id")
 	private Client clients = new Client();
 	
 	@OneToMany(mappedBy = "orders")
@@ -72,6 +79,7 @@ public class Order implements Serializable{
 		this.moment = moment;
 	}
 
+	@JsonIgnore
 	public Client getClients() {
 		return clients;
 	}

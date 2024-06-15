@@ -10,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -39,14 +40,13 @@ public class Client implements Serializable{
 		
 	}
 
-	public Client(Long id, String name, String email, String cpf, String address, List<Order> orders) {
+	public Client(Long id, String name, String email, String cpf, String address) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.cpf = cpf;
 		this.address = address;
-		this.orders = orders;
 	}
 
 	public Long getId() {
