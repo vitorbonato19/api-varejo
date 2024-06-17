@@ -1,15 +1,15 @@
 package br.com.localvarejo.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -27,19 +27,18 @@ public class Product implements Serializable{
 	private Integer stock;
 	
 	@OneToMany(mappedBy = "products")
-	private List<OrderItem> orderItems = new ArrayList<>();
+	private Set<OrderItem> orderItems = new HashSet<>();
 	
 	public Product() {
 		
 	}
 
-	public Product(Long id, String name, Double price, Integer stock, List<OrderItem> orderItems) {
+	public Product(Long id, String name, Double price, Integer stock) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.stock = stock;
-		this.orderItems = orderItems;
 	}
 
 	public Long getId() {
@@ -74,7 +73,7 @@ public class Product implements Serializable{
 		this.stock = stock;
 	}
 
-	public List<OrderItem> getOrderItems() {
+	public Set<OrderItem> getOrderItems() {
 		return orderItems;
 	}
 

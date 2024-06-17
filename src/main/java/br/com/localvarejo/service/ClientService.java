@@ -23,4 +23,9 @@ public class ClientService {
 		return repository.findById(id);
 	}
 	
+	public Client insert(Client client) {
+		 return repository.save(client);
+	}
+	
+	
 }

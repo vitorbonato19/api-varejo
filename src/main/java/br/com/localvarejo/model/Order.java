@@ -1,14 +1,18 @@
 package br.com.localvarejo.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.localvarejo.model.enums.OrderStatusEnum;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +21,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,8 +31,8 @@ public class Order implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.UUID)
+	private UUID id;
 	@Column(name = "order_desc")
 	private String desc;
 	
@@ -35,32 +40,41 @@ public class Order implements Serializable{
 	@Column(name = "order_moment")
 	private Instant moment;
 	
+	private Integer orderStatus;
+	
 	@ManyToOne
-	@JoinColumn(name = "order_clients_id")
-	private Client clients = new Client();
+	@JoinColumn(name = "order_client_id")
+	private Client client;
 	
 	@OneToMany(mappedBy = "orders")
 	private List<OrderItem> items = new ArrayList<>();
+	
+	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+	private Payment payment;
 	
 	public Order() {
 		
 	}
 
-	public Order(Long id, String desc, Instant moment, Client clients, List<OrderItem> items) {
+	public Order(UUID id, String desc, Instant moment, OrderStatusEnum orderStatus, Client client) {
 		super();
 		this.id = id;
 		this.desc = desc;
 		this.moment = moment;
-		this.clients = clients;
-		this.items = items;
+		this.client = client;
+		setOrderStatusEnum(orderStatus);
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
+	}
+	
+	public Payment getPayment() {
+		return payment;
 	}
 
 	public String getDesc() {
@@ -69,6 +83,16 @@ public class Order implements Serializable{
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+	
+	public OrderStatusEnum getOrderStatus() {
+		return OrderStatusEnum.valueOf(orderStatus);
+	}
+
+	public void setOrderStatusEnum(OrderStatusEnum orderStatus) {
+		if (orderStatus != null) {
+			this.orderStatus = orderStatus.getNum();
+		}
 	}
 
 	public Instant getMoment() {
@@ -81,7 +105,7 @@ public class Order implements Serializable{
 
 	@JsonIgnore
 	public Client getClients() {
-		return clients;
+		return client;
 	}
 
 	public List<OrderItem> getItems() {
@@ -103,6 +127,14 @@ public class Order implements Serializable{
 			return false;
 		Order other = (Order) obj;
 		return Objects.equals(id, other.id);
+	}
+
+	public double getTotal() {
+		double total = 0.0;
+			for (OrderItem x : items) {
+				total += x.getSubtotal();
+			}
+		return total;
 	}
 	
 	

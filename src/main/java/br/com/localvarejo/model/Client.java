@@ -10,7 +10,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -33,7 +32,7 @@ public class Client implements Serializable{
 	@Column(name = "client_address")
 	private String address;
 	
-	@OneToMany(mappedBy = "clients")
+	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 
 	public Client() {
