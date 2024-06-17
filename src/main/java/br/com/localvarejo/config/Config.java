@@ -61,9 +61,10 @@ public class Config implements CommandLineRunner {
 		Payment p5 = new Payment(null, Instant.parse("2024-06-09T21:15:15Z"), o5);
 		Payment p6 = new Payment(null, Instant.parse("2024-06-05T19:06:01Z"), o6);
 		
-		
 		paymentRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5,p6));
 		orderRepository.saveAll(Arrays.asList(o1,o2,o3,o4,o5,o6));
+		
+		
 		
 	}
 }

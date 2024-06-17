@@ -28,7 +28,7 @@ public class Payment implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(nullable = false, updatable = false)
-	private UUID uuid;
+	private Long id;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-DD-dd HH:mm:ss", timezone="GMT")
 	private Instant moment;
@@ -43,9 +43,9 @@ public class Payment implements Serializable{
 		
 	}
 	
-	public Payment(UUID uuid, Instant moment, Order order) {
+	public Payment(Long id, Instant moment, Order order) {
 		super();
-		this.uuid = uuid;
+		this.id = id;
 		this.moment = moment;
 		this.order = order;
 	}
@@ -54,12 +54,12 @@ public class Payment implements Serializable{
 		return order.getTotal();
 	}
 	
-	public UUID getUuid() {
-		return uuid;
+	public Long getUuid() {
+		return id;
 	}
 
-	public void setUuid(UUID uuid) {
-		this.uuid = uuid;
+	public void setUuid(Long id) {
+		this.id = id;
 	}
 
 	public Instant getMoment() {
@@ -76,7 +76,7 @@ public class Payment implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(uuid);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class Payment implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Payment other = (Payment) obj;
-		return Objects.equals(uuid, other.uuid);
+		return Objects.equals(id, other.id);
 	}
 	
 }

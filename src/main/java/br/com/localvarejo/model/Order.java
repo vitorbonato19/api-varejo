@@ -31,8 +31,8 @@ public class Order implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
-	private UUID id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	@Column(name = "order_desc")
 	private String desc;
 	
@@ -56,7 +56,7 @@ public class Order implements Serializable{
 		
 	}
 
-	public Order(UUID id, String desc, Instant moment, OrderStatusEnum orderStatus, Client client) {
+	public Order(Long id, String desc, Instant moment, OrderStatusEnum orderStatus, Client client) {
 		super();
 		this.id = id;
 		this.desc = desc;
@@ -65,11 +65,11 @@ public class Order implements Serializable{
 		setOrderStatusEnum(orderStatus);
 	}
 
-	public UUID getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

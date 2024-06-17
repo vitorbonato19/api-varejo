@@ -23,4 +23,7 @@ public class OrderService {
 		return repository.findById(id);
 	}
 	
+	public Order insert(Order order) {
+		return repository.save(order);
+	}
 }

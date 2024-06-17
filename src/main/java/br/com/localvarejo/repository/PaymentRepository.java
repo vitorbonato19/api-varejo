@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import br.com.localvarejo.model.Payment;
 
 @Repository
-public interface PaymentRepository extends JpaRepository<Payment, UUID>{
+public interface PaymentRepository extends JpaRepository<Payment, Long>{
 
 }
