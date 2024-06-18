@@ -35,12 +35,13 @@ public class Product implements Serializable{
 		
 	}
 
-	public Product(Long id, String name, Double price, Integer stock) {
+	public Product(Long id, String name, Double price, Integer stock, String imgUrl) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.stock = stock;
+		this.imgUrl = imgUrl; 
 	}
 
 	public Long getId() {
@@ -108,6 +109,6 @@ public class Product implements Serializable{
 		Product other = (Product) obj;
 		return Objects.equals(id, other.id);
 	}
-	
+
 	
 }

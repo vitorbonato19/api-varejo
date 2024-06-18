@@ -48,10 +48,10 @@ public class Config implements CommandLineRunner {
 		
 		clientRepository.saveAll(Arrays.asList(c1,c2,c3,c4,c5));
 
-		Product p1 = new Product(null, "MacBook Pro", 650.45, 9);
-		Product p2 = new Product(null, "JBL Headset 400BT", 199.99, 4);
-		Product p3 = new Product(null, "Notebook Acer Nitro 64GB/RAM", 999.99, 12);
-		Product p4 = new Product(null, "Monitor Zowie BEQN 360Hz", 1000.99, 3);
+		Product p1 = new Product(null, "MacBook Pro", 650.45, 9, "");
+		Product p2 = new Product(null, "JBL Headset 400BT", 199.99, 4, "");
+		Product p3 = new Product(null, "Notebook Acer Nitro 64GB/RAM", 999.99, 12, "");
+		Product p4 = new Product(null, "Monitor Zowie BEQN 360Hz", 1000.99, 3 ,"");
 		
 		productRepository.saveAll(Arrays.asList(p1,p2,p3,p4));
 		
@@ -61,6 +61,8 @@ public class Config implements CommandLineRunner {
 		Order o4 = new Order(null, "Thank you for buy our product! Hope full you enjoy...", Instant.parse("2024-06-10T16:20:43Z"), OrderStatusEnum.DELIVERED, c3);
 		Order o5 = new Order(null, "Thank you for buy our product! Hope full you enjoy...", Instant.parse("2024-06-09T21:15:15Z"), OrderStatusEnum.PAYD, c4);
 		Order o6 = new Order(null, "Thank you for buy our product! Hope full you enjoy...", Instant.parse("2024-06-05T19:06:01Z"), OrderStatusEnum.DELIVERED, c5);
+		
+		orderRepository.saveAll(Arrays.asList(o1,o2,o3,o4,o5,o6));
 		
 		OrderItem oi1 = new OrderItem(p1, o1, 3, p1.getPrice());
 		OrderItem oi2 = new OrderItem(p2, o2, 1, p2.getPrice());
@@ -79,7 +81,11 @@ public class Config implements CommandLineRunner {
 		Payment pay6 = new Payment(null, Instant.parse("2024-06-05T19:06:01Z"), o6);
 		
 		paymentRepository.saveAll(Arrays.asList(pay1,pay2,pay3,pay4,pay5,pay6));
-		orderRepository.saveAll(Arrays.asList(o1,o2,o3,o4,o5,o6));
+		
+		
+		
+		
+		
 		
 		
 	}
