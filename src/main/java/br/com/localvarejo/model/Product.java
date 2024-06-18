@@ -2,9 +2,10 @@ package br.com.localvarejo.model;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,8 +26,9 @@ public class Product implements Serializable{
 	private String name;
 	private Double price;
 	private Integer stock;
+	private String imgUrl;
 	
-	@OneToMany(mappedBy = "products")
+	@OneToMany(mappedBy = "id.product")
 	private Set<OrderItem> orderItems = new HashSet<>();
 	
 	public Product() {
@@ -47,6 +49,14 @@ public class Product implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	public String getName() {
@@ -73,8 +83,13 @@ public class Product implements Serializable{
 		this.stock = stock;
 	}
 
-	public Set<OrderItem> getOrderItems() {
-		return orderItems;
+	@JsonIgnore
+	public Set<Order> getOrderItems() {
+		Set<Order> set = new HashSet<>();
+		for (OrderItem x : orderItems) {
+			set.add(x.getOrders());
+		}
+		return set;
 	}
 
 	@Override

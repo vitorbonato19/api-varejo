@@ -46,7 +46,7 @@ public class Order implements Serializable{
 	@JoinColumn(name = "order_client_id")
 	private Client client;
 	
-	@OneToMany(mappedBy = "orders")
+	@OneToMany(mappedBy = "id.order")
 	private List<OrderItem> items = new ArrayList<>();
 	
 	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)

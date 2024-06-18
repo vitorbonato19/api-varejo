@@ -1,10 +1,10 @@
 package br.com.localvarejo.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
+import br.com.localvarejo.model.embedd.OrderItemChild;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,39 +19,22 @@ public class OrderItem implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@EmbeddedId
+	private OrderItemChild id = new OrderItemChild();
+	
 	private Double price;
 	private Integer quantity;
-	
-	@ManyToOne
-	@JoinColumn(name = "ordersItem_order_id")
-	private Order orders = new Order();
-	
-	@ManyToOne
-	@JoinColumn(name = "orderItem_product_id")
-	private Product products;
 	
 	public OrderItem() {
 		
 	}
 
-	public OrderItem(Long id, Integer quantity, Double price,Order orders, Product product) {
+	public OrderItem(Product product, Order order, Integer quantity, Double price) {
 		super();
-		this.id = id;
+		id.setProduct(product);
+		id.setOrder(order);
 		this.quantity = quantity;
-		this.price = product.getPrice();
-		this.orders = orders;
-		this.products = product;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+		this.price = price;
 	}
 
 	public Integer getQuantity() {
@@ -70,18 +53,22 @@ public class OrderItem implements Serializable{
 		this.price = price;
 	}
 
-	public Product getProduct() {
-		return products;
-	}
-
 	public Order getOrders() {
-		return orders;
+		return id.getOrder();
 	}
 
-	public Product getProducts() {
-		return products;
+	public void setOrder(Order order) {
+		id.setOrder(order);
 	}
-
+	
+	public Product getProduct() {
+		return id.getProduct();
+	}
+	
+	public void setProduct(Product product) {
+		id.setProduct(product);
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -100,7 +87,7 @@ public class OrderItem implements Serializable{
 	}
 
 	public double getSubtotal() {
-		return products.getPrice() * quantity;
+		return price * quantity;
 	}
 
 	

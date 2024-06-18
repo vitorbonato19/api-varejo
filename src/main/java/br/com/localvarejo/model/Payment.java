@@ -36,7 +36,7 @@ public class Payment implements Serializable{
 	@JsonIgnore
 	@OneToOne
 	@MapsId
-	@JoinColumn(name = "payment_order_uuid")
+	@JoinColumn(name = "payment_order_id")
 	private Order order;
 	
 	public Payment() {
@@ -54,11 +54,11 @@ public class Payment implements Serializable{
 		return order.getTotal();
 	}
 	
-	public Long getUuid() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setUuid(Long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
