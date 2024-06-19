@@ -6,6 +6,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import br.com.localvarejo.model.Client;
 import br.com.localvarejo.model.Order;
@@ -20,7 +21,8 @@ import br.com.localvarejo.repository.PaymentRepository;
 import br.com.localvarejo.repository.ProductRepository;
 
 @Configuration
-public class Config implements CommandLineRunner {
+@Profile("h2-test")
+public class ConfigH2 implements CommandLineRunner {
 
 	@Autowired
 	private ClientRepository clientRepository;

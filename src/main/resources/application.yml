@@ -1,11 +1,12 @@
 spring:
+  profiles:
+    active: "docker"
   datasource:
     url: jdbc:mysql://localhost:3306/varejolocal
-    username: developer
-    password: Vitor12345
+    username: admin
+    password: 123
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
-    database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
     show-sql: true    
@@ -13,3 +14,4 @@ spring:
     console: 
      enabled: true
      path: /h2-console
+         
