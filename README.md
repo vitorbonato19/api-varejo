@@ -1,6 +1,8 @@
 # Exercício: Criar uma API de Varejo Local com Spring Boot, Java 21, Spring Data JPA e H2 Database
-## Objetivo 
-Desenvolver uma API de varejo local que gerencie clientes, pedidos e itens de pedidos, com todas as entidades associadas entre si.
+## Objetivos
+- Desenvolver uma API de varejo local que gerencie clientes, pedidos e itens de pedidos, com todas as entidades associadas entre si utilizando Java e Spring/Spring JPA
+- Utilizar o MySQL para persistir as entidades
+- Subir o MySQL no Docker
 # Requisitos:
 
 ### Entidades:
