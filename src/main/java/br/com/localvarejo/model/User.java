@@ -3,6 +3,9 @@ package br.com.localvarejo.model;
 import java.util.Set;
 import java.util.UUID;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import br.com.localvarejo.controllers.dto.LoginRequest;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -67,6 +70,10 @@ public class User {
 
 	public void setRoleSet(Set<Role> roleSet) {
 		this.roleSet = roleSet;
+	}
+
+	public boolean isLoginCorrect(LoginRequest loginRequest, PasswordEncoder passwordEncoder) {
+		return passwordEncoder.matches(loginRequest.password(), this.password);
 	}
 	
 	

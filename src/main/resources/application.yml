@@ -14,4 +14,13 @@ spring:
     console: 
      enabled: true
      path: /h2-console
+  sql:
+    init:
+      schema-locations: classpath:data.sql
+jwt:
+ public:
+  key: classpath:app.pub
+ private:
+  key: classpath:app.key
+        
          

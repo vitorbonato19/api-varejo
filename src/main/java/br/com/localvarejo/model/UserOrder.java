@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 public class UserOrder {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "order_id")
 	private Long orderId;
 	
