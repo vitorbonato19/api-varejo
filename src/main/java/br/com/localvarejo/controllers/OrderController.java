@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.localvarejo.controllers.dto.OrderItemDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,13 +19,13 @@ import br.com.localvarejo.model.Order;
 import br.com.localvarejo.service.OrderService;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping
 public class OrderController {
 
 	@Autowired
 	private OrderService service;
 	
-	@GetMapping
+	@GetMapping("/orders")
 	public ResponseEntity<List<Order>> findAll() {
 		List<Order> list = service.findAll();
 		return ResponseEntity.ok().body(list);
@@ -36,12 +37,12 @@ public class OrderController {
 		return ResponseEntity.ok().body(list);
 	}
 	
-	@PostMapping
-	public ResponseEntity<Order> insert(@RequestBody Order order) {
-		service.insert(order);
-		URI uri = ServletUriComponentsBuilder.
-				fromCurrentRequest().
-				path("/{id}").buildAndExpand(order.getId()).toUri();
-		return ResponseEntity.created(uri).body(order);
+	@PostMapping("/orders")
+	public ResponseEntity<Order> newOrder(@RequestBody OrderItemDto dto) {
+
+		var newOrder =
+
 	}
+
+
 }

@@ -1,7 +1,9 @@
 package br.com.localvarejo.controllers;
 
 import java.time.Instant;
+import java.util.stream.Collectors;
 
+import br.com.localvarejo.model.Role;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -35,17 +37,23 @@ public class TokenController {
 	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) 	{
 		var user = repository.findByUsername(loginRequest.username());
 		
-		if (user.isEmpty() || user.get().isLoginCorrect(loginRequest, passwordEncoder)) {
+		if (user.isEmpty() || !user.get().isLoginCorrect(loginRequest, passwordEncoder)) {
 			throw new BadCredentialsException("User or password is invalid...");
 		}
 		
 		var now = Instant.now();
 		var expiresIn = 300L;
-		
+
+		var scopes = user.get().getRoleSet()
+				.stream()
+				.map(Role::getName)
+				.collect(Collectors.joining(" "));
+
 		var claims = JwtClaimsSet.builder()
 				.issuer("backend-java")
 				.subject(user.get().getUserId().toString())
 				.issuedAt(now)
+				.claim("scope", scopes)
 				.expiresAt(now.plusSeconds(expiresIn))
 				.build();
 		
