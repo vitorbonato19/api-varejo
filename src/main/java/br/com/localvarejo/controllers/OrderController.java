@@ -1,30 +1,45 @@
 package br.com.localvarejo.controllers;
 
-import java.net.URI;
+import br.com.localvarejo.controllers.dto.OrderDto;
+import br.com.localvarejo.model.Order;
+import br.com.localvarejo.repository.OrderRepository;
+import br.com.localvarejo.repository.UserRepository;
+import br.com.localvarejo.service.OrderService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+
 import java.util.List;
 import java.util.Optional;
-
-import br.com.localvarejo.controllers.dto.OrderItemDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import br.com.localvarejo.model.Order;
-import br.com.localvarejo.service.OrderService;
 
 @RestController
 @RequestMapping
 public class OrderController {
 
-	@Autowired
-	private OrderService service;
-	
+
+	private final OrderService service;
+
+	private final OrderRepository orderRepository;
+
+	private final UserRepository userRepository;
+
+	private final RestTemplate restTemplate;
+
+	@Value("${OrderItemController.url}")
+	private String orderItemUrl;
+
+	public OrderController(OrderService service, OrderRepository repository, OrderRepository orderRepository, UserRepository userRepository, RestTemplate restTemplate) {
+		this.service = service;
+		this.orderRepository = orderRepository;
+		this.userRepository = userRepository;
+		this.restTemplate = restTemplate;
+	}
+
 	@GetMapping("/orders")
 	public ResponseEntity<List<Order>> findAll() {
 		List<Order> list = service.findAll();
@@ -38,9 +53,22 @@ public class OrderController {
 	}
 	
 	@PostMapping("/orders")
-	public ResponseEntity<Order> newOrder(@RequestBody OrderItemDto dto) {
+	public ResponseEntity<String> newOrder(@RequestBody OrderDto dto) {
 
-		var newOrder =
+		var newOrder = new Order();
+		newOrder.setItems(dto.items());
+
+		String url = orderItemUrl;
+
+		HttpHeaders headers = new HttpHeaders();
+		HttpEntity<String> requestEntity = new HttpEntity<>(null, headers);
+
+		try {
+			ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
+			return ResponseEntity.ok("Order created. Response from OrderItems" + response.getBody());
+		} catch (RestClientException ex) {
+			return ResponseEntity.status(500).body("Error calling OrderItemsController : " + ex.getMessage());
+		}
 
 	}
 

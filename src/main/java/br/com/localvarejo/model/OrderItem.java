@@ -1,14 +1,13 @@
 package br.com.localvarejo.model;
 
-import java.io.Serializable;
-import java.util.Objects;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import br.com.localvarejo.model.embedd.OrderItemChild;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+
+import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tb_order_item")

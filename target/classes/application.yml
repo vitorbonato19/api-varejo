@@ -22,5 +22,7 @@ jwt:
   key: classpath:app.pub
  private:
   key: classpath:app.key
+OrderItemController:
+  url: "http://localhost:8080/api/orderItems"
         
          
