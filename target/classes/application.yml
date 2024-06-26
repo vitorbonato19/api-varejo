@@ -1,4 +1,6 @@
 spring:
+  jackson:
+    time-zone: America/Sao_Paulo
   profiles:
     active: "docker"
   datasource:
@@ -23,6 +25,6 @@ jwt:
  private:
   key: classpath:app.key
 OrderItemController:
-  url: "http://localhost:8080/api/orderItems"
+  url: "http://localhost:8080/orderItems"
         
          

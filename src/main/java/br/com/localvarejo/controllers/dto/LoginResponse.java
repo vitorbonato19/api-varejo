@@ -1,5 +1,7 @@
 package br.com.localvarejo.controllers.dto;
 
-public record LoginResponse(String acessToken, Long expiresIn) {
+import java.time.Instant;
+
+public record LoginResponse(String accessToken, Long expiresIn, Instant created) {
 
 }

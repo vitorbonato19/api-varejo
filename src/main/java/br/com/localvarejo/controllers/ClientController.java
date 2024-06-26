@@ -4,8 +4,10 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.localvarejo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,14 +25,16 @@ public class ClientController {
 
 	@Autowired
 	private ClientService service;
-	
+
 	@GetMapping
+	@PreAuthorize("hasAuthority('SCOPE_ADMIN')")
 	public ResponseEntity<List<Client>> findAll() {
-		List<Client> list = service.findAll();
-		return ResponseEntity.ok().body(list);	
+		var clients = service.findAll();
+		return ResponseEntity.ok().body(clients);
 	}
 	
 	@GetMapping("/{id}")
+	@PreAuthorize("hasAuthority('SCOPE_ADMIN')")
 	public ResponseEntity<Optional<Client>> findById(@PathVariable Long id) {
 		Optional<Client> client = service.findById(id);
 		return ResponseEntity.ok().body(client);
