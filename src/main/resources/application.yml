@@ -21,10 +21,9 @@ spring:
       schema-locations: classpath:data.sql
 jwt:
  public:
-  key: classpath:app.pub
+  key: classpath:${PUB_KEY}
  private:
-  key: classpath:app.key
+  key: classpath:${PRIVATE_KEY}
 OrderItemController:
   url: "http://localhost:8080/orderItems"
-        
          

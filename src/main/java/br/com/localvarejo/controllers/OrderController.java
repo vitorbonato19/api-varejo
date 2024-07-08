@@ -64,7 +64,11 @@ public class OrderController {
 
 		var newOrder = new Order();
 		newOrder.setItems(dto.items());
-		newOrder.setOrderStatusEnum(OrderStatusEnum.PAYD);
+		if (newOrder.getOrderStatus() == null) {
+			newOrder.setOrderStatusEnum(OrderStatusEnum.WAITING_PAYMENT);
+		} else {
+			newOrder.setOrderStatusEnum(OrderStatusEnum.PAYD);
+		}
 		newOrder.setUser(dto.user());
 		newOrder.setDesc("Thank you for buy our products!");
 
