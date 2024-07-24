@@ -5,5 +5,14 @@ import br.com.localvarejo.model.User;
 
 import java.util.Set;
 
-public record OrderDto(Set<OrderItem> items, User user) {
+public class OrderDto {
+
+    private final User user;
+
+    private final Set<OrderItem> orderItem;
+
+    public OrderDto(User user, Set<OrderItem> orderItem) {
+        this.user = user;
+        this.orderItem = orderItem;
+    }
 }

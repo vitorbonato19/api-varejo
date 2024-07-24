@@ -1,13 +1,12 @@
 package br.com.localvarejo.service;
 
-import java.util.List;
-import java.util.Optional;
-
+import br.com.localvarejo.model.Client;
+import br.com.localvarejo.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.localvarejo.model.Client;
-import br.com.localvarejo.repository.ClientRepository;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClientService {
@@ -24,7 +23,7 @@ public class ClientService {
 	}
 	
 	public Client insert(Client client) {
-		 return repository.save(client);
+		return repository.save(client);
 	}
 	
 	

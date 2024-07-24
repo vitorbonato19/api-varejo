@@ -7,12 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Api-Varejo" />
+        <module name="api-varejo" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Api-Varejo" options="-parameters" />
+      <module name="api-varejo" options="-parameters" />
     </option>
   </component>
 </project>
